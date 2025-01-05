@@ -1,7 +1,8 @@
-# import requests as req
+ # Import necessary libraries
+import requests as req
 from os import path, system
 
-
+# Check if requirements.txt exists and install missing libraries
 if path.exists("./requirements.txt"):
     with open("./requirements.txt") as file:
         libs = [i.split("==")[0] for i in file.readlines()]
@@ -13,37 +14,34 @@ if path.exists("./requirements.txt"):
         except ModuleNotFoundError:
             system("pip install "+lib)
 
-
+# Importing additional libraries for functionality and styling
 from pystyle import Col, Center, System
-from Plugins.api_list import handler
 from colorama import Fore
 from Plugins.functions import Functions
 
-r, g = Fore.LIGHTGREEN_EX, Fore.LIGHTYELLOW_EX
+# Define color variable for console output
+r = Fore.LIGHTRED_EX
+
+# Define the logo using the provided binary string
+binary_logo = r'''
+
+ $$$$$$\        $$\      $$\       $$$$$$\       $$\   $$\ 
+$$  __$$\       $$$\    $$$ |      \_$$  _|      $$$\  $$ |
+$$ /  $$ |      $$$$\  $$$$ |        $$ |        $$$$\ $$ |
+$$$$$$$$ |      $$\$$\$$ $$ |        $$ |        $$ $$\$$ |
+$$  __$$ |      $$ \$$$  $$ |        $$ |        $$ \$$$$ |
+$$ |  $$ |      $$ |\$  /$$ |        $$ |        $$ |\$$$ |
+$$ |  $$ |      $$ | \_/ $$ |      $$$$$$\       $$ | \$$ |
+\__|  \__|      \__|     \__|      \______|      \__|  \__|
+                                                           
+                                                           
+                                                           
+'''
 
 if __name__ == "__main__":
-    logo = f'''
-
-                {g}██{r}╗{g}██████{r}╗{g}  █████{r}╗{g} ███{r}╗{g}  ██{r}╗{g}
-                ██{r}║{g}██{r}╔══{g}██{r}╗{g}██{r}╔══{g}██{r}╗{g}████{r}╗ {g}██{r}║
-               {g} ██{r}║{g}██████{r}╔╝{g}███████{r}║{g}██{r}╔{g}██{r}╗{g}██{r}║
-                {g}██{r}║{g}██{r}╔══{g}██{r}╗{g}██{r}╔══{g}██{r}║{g}██{r}║╚{g}████{r}║
-                {g}██{r}║{g}██{r}║  {g}██{r}║{g}██{r}║ {g} ██{r}║{g}██{r}║ ╚{g}███{r}║
-                ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚══╝
-    {g}██████{r}╗  {g}█████{r}╗ {g}███{r}╗   {g}███{r}╗{g}██████{r}╗ {g}███████{r}╗{g}██████{r}╗ 
-    {g}██{r}╔══{g}██{r}╗{g}██{r}╔══{g}██{r}╗{g}████{r}╗ {g}████{r}║{g}██{r}╔══{g}██{r}╗{g}██{r}╔════╝{g}██{r}╔══{g}██{r}╗
-    {g}██████{r}╦╝{g}██{r}║  {g}██{r}║{g}██{r}╔{g}████{r}╔{g}██{r}║{g}██████{r}╦╝{g}█████{r}╗  {g}██████{r}╔╝
-    {g}██{r}╔══{g}██{r}╗{g}██{r}║{g}  ██{r}║{g}██{r}║╚{g}██{r}╔╝{g}██{r}║{g}██{r}╔══{g}██{r}╗{g}██{r}╔══╝{g}  ██{r}╔══{g}██{r}╗
-    {g}██████{r}╦╝╚{g}█████{r}╔╝{g}██{r}║ ╚═╝ {g}██{r}║{g}██████{r}╦╝{g}███████{r}╗{g}██{r}║  {g}██{r}║
-    {r}╚═════╝  ╚════╝ ╚═╝     ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-    '''
-
-
-
-
     while True:
         System.Clear()
-        print(Center.XCenter(logo))
+        print(Center.XCenter(r + binary_logo))
 
         try:
             proxy_state = Fore.GREEN + "Enabled" if Functions.proxy_state() else Fore.RED + "Disabled"
@@ -63,7 +61,6 @@ if __name__ == "__main__":
             count = Functions.get_input(f"{Fore.CYAN}[=]{Col.gray} Enter spam count: {Col.green}", lambda x: x.isnumeric() and int(x) >= 0)
 
             Functions.start(choices[choice], number, int(count))
-
 
         except KeyboardInterrupt:
             print("\n" + Fore.BLUE, "Exiting...")
